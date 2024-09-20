@@ -15,5 +15,26 @@ sudo apt-get install -y nginx
 sudo systemctl enable nginx
 sudo systemctl start nginx
 
-# Create a simple HTML file with "Hello from {hostname}"
-echo "Hello from ${HOSTNAME}!" | sudo tee /var/www/html/index.html
+# Get the hostname
+HOSTNAME=$(hostname)
+
+# Get the IP address
+IP_ADDRESS=$(hostname -I | awk '{print $1}')
+
+# Get the current time
+CURRENT_TIME=$(date)
+
+# Write to the index.html file
+cat <<EOF > /var/www/html/index.html
+<html>
+<head>
+    <title>VM Info</title>
+</head>
+<body>
+    <h1>VM Information</h1>
+    <p><strong>Hostname:</strong> $HOSTNAME</p>
+    <p><strong>IP Address:</strong> $IP_ADDRESS</p>
+    <p><strong>Current Time:</strong> $CURRENT_TIME</p>
+</body>
+</html>
+EOF
