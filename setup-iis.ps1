@@ -18,9 +18,6 @@ $indexContent = @"
 <head>
     <title>Server Info</title>
     <script>
-        function getServerInfo() {
-            document.getElementById("time").innerText = new Date().toLocaleString();
-        }
     </script>
 </head>
 <body onload="getServerInfo()">
