@@ -30,6 +30,7 @@ cat <<EOF > /var/www/html/index.html
 <head>
 </head>
 <body>
+    <h1>Server Information</h1>
     <p><strong>Hostname:</strong> $HOSTNAME</p>
     <p><strong>IP Address:</strong> $IP_ADDRESS</p>
     <p><strong>Build Time:</strong> $CURRENT_TIME</p>
