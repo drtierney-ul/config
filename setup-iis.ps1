@@ -5,6 +5,10 @@ Install-WindowsFeature -name Web-Server -IncludeManagementTools
 $websitePath = "C:\inetpub\wwwroot\ServerInfo"
 New-Item -Path $websitePath -ItemType Directory -Force
 
+# Get the hostname and IP address
+$hostname = [System.Net.Dns]::GetHostName()
+$ipAddress = [System.Net.Dns]::GetHostAddresses($hostname) | Where-Object { $_.AddressFamily -eq 'InterNetwork' } | Select-Object -First 1
+
 # Create the HTML file
 $indexPath = "$websitePath\index.html"
 $indexContent = @"
@@ -14,17 +18,15 @@ $indexContent = @"
     <title>Server Info</title>
     <script>
         function getServerInfo() {
-            document.getElementById("hostname").innerText = window.location.hostname;
-            document.getElementById("ip").innerText = window.location.host;
             document.getElementById("time").innerText = new Date().toLocaleString();
         }
     </script>
 </head>
 <body onload="getServerInfo()">
     <h1>Server Information</h1>
-    <p>Hostname: <span id="hostname"></span></p>
-    <p>IP Address: <span id="ip"></span></p>
-    <p>Current Time: <span id="time"></span></p>
+    <p>Hostname: <span id="hostname">$hostname</span></p>
+    <p>IP Address: <span id="ip">$ipAddress</span></p>
+    <p>Build Time: <span id="time"></span></p>
 </body>
 </html>
 "@
