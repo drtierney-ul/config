@@ -7,7 +7,7 @@ New-Item -Path $websitePath -ItemType Directory -Force
 
 # Get the hostname and IP address
 $hostname = [System.Net.Dns]::GetHostName()
-$ipAddress = [System.Net.Dns]::GetHostAddresses($hostname) | Where-Object { $_.AddressFamily -eq 'InterNetwork' } | Select-Object -First 1
+$ipAddress = ([System.Net.Dns]::GetHostAddresses($hostname) | Where-Object { $_.AddressFamily -eq 'InterNetwork' } | Select-Object -First 1).IPAddressToString
 
 # Create the HTML file
 $indexPath = "$websitePath\index.html"
