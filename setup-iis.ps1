@@ -8,6 +8,7 @@ New-Item -Path $websitePath -ItemType Directory -Force
 # Get the hostname and IP address
 $hostname = [System.Net.Dns]::GetHostName()
 $ipAddress = ([System.Net.Dns]::GetHostAddresses($hostname) | Where-Object { $_.AddressFamily -eq 'InterNetwork' } | Select-Object -First 1).IPAddressToString
+$buildTime = (Get-Date)
 
 # Create the HTML file
 $indexPath = "$websitePath\index.html"
@@ -26,7 +27,7 @@ $indexContent = @"
     <h1>Server Information</h1>
     <p>Hostname: <span id="hostname">$hostname</span></p>
     <p>IP Address: <span id="ip">$ipAddress</span></p>
-    <p>Build Time: <span id="time"></span></p>
+    <p>Build Time: <span id="buildtime">$buildTime</span></p>
 </body>
 </html>
 "@
